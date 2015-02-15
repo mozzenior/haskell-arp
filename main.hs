@@ -1,14 +1,19 @@
-import Network
+import Network.Socket
 import System.IO (hClose, hGetLine)
 
 main :: IO ()
 main = withSocketsDo $ do
-    sock <- listenOn $ PortNumber 5566
-    (hdl, host, port) <- accept sock
+    sock <- socket AF_INET Stream defaultProtocol
+    bind sock (SockAddrInet (fromInteger 5566) iNADDR_ANY)
+    listen sock 5
+    (client, cliAddr) <- accept sock
 
-    putStrLn ("Accept connection from " ++ host ++ " " ++ show port)
-    line <- hGetLine hdl
+    let (SockAddrInet (PortNum port) addr) = cliAddr
+    addrS <- inet_ntoa addr
+    putStrLn ("Accept connection from " ++ addrS ++ " " ++ show port)
+
+    line <- recv client 128
     putStrLn ("Read: " ++ line)
 
-    hClose hdl
+    sClose client
     sClose sock
