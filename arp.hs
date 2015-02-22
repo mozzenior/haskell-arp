@@ -150,10 +150,10 @@ ipv4Plen :: Word8
 ipv4Plen = 4
 
 ethernetBroadcast :: Ethernet
-ethernetBroadcast = Ethernet 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF
+ethernetBroadcast = newEthernet "ff:ff:ff:ff:ff:ff"
 
 ipv4Broadcast :: IPv4
-ipv4Broadcast = IPv4 0xFF 0xFF 0xFF 0xFF
+ipv4Broadcast = newIPv4 "255.255.255.255"
 
 -- main :: IO ()
 -- main = return ()
