@@ -1,10 +1,10 @@
 GHC := ghc
 
-default: arp
+default: my_arp
 
-arp:
-	$(GHC) -o $@ $@.hs
-PHONY += arp
+my_arp: arp.hs
+	$(GHC) -o $@ $^
+PHONY += my_arp
 
 clean:
 	git clean -dxf
