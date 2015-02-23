@@ -1,7 +1,7 @@
 module Main where
 
 import ARP.ARP (ArpOperation(..), ArpPacket(..))
-import ARP.Ethernet (Ethernet, broadcast, newEthernet)
+import ARP.MAC (MAC, broadcast, newMAC)
 import ARP.IPv4 (IPv4, newIPv4)
 import Data.Binary (put)
 import Data.Binary.Put (runPut)
@@ -10,14 +10,14 @@ import Data.List (intersperse)
 import Data.Word (Word16, Word8)
 import Text.Printf (printf)
 
-newArpRequest :: IPv4 -> ArpPacket Ethernet IPv4
+newArpRequest :: IPv4 -> ArpPacket MAC IPv4
 newArpRequest tpa = ArpPacket htype ptype hlen plen op sha spa tha tpa
     where htype = ethernetHtype
           ptype = ipv4Ptype
           hlen  = ethernetHlen
           plen  = ipv4Plen
           op    = ArpRequest
-          sha   = (newEthernet "b3:a3:86:07:b6:3e")
+          sha   = (newMAC "b3:a3:86:07:b6:3e")
           spa   = (newIPv4 "192.168.168.105")
           tha   = broadcast
 
